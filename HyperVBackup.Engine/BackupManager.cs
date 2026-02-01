@@ -36,6 +36,7 @@ namespace HyperVBackUp.Engine
     public class BackupManager
     {
         public event EventHandler<BackupProgressEventArgs> BackupProgress;
+        private string _currentFile = string.Empty;
         private volatile bool _cancel = false;
 
         public IDictionary<string, string> VssBackup(IEnumerable<string> vmNames, VmNameType nameType, Options options,
@@ -183,8 +184,6 @@ namespace HyperVBackUp.Engine
             }
         }
 
-        private static string _currentFile = string.Empty;
-
         private void BackupFiles(IList<IVssWMComponent> components, IDictionary<string, string> volumeMap,
             IDictionary<string, string> snapshotVolumeMap, IDictionary<string, string> vmNamesMap,
             Options options, ILogger logger)
@@ -238,30 +237,21 @@ namespace HyperVBackUp.Engine
                         var include = !path.EndsWith("\\*");
 
                         var pathItems = path.Split(Path.DirectorySeparatorChar);
-                        if (pathItems.Length >= 2)
+                        if (pathItems.Length >= 2 && string.Equals(pathItems[pathItems.Length - 2], "snapshots", StringComparison.InvariantCultureIgnoreCase))
                         {
-                            if (pathItems[pathItems.Length - 2].ToLowerInvariant() == "snapshots")
-                            {
-                                include = false;
-                            }
+                            include = false;
                         }
 
-                        if (include && options.VhdInclude != null)
-                        {
-                            if (options.VhdInclude.Count(
+                        if (include && options.VhdInclude != null && options.VhdInclude.Count(
                                     x => string.CompareOrdinal(x.ToUpperInvariant(), fileName) == 0) == 0)
-                            {
-                                include = false;
-                            }
+                        {
+                            include = false;
                         }
 
-                        if (include && options.VhdIgnore != null)
-                        {
-                            if (options.VhdIgnore.Count(
+                        if (include && options.VhdIgnore != null && options.VhdIgnore.Count(
                                     x => string.CompareOrdinal(x.ToUpperInvariant(), fileName) == 0) != 0)
-                            {
-                                include = false;
-                            }
+                        {
+                            include = false;
                         }
 
                         if (include)
@@ -285,7 +275,7 @@ namespace HyperVBackUp.Engine
 
                     if (!options.DirectCopy)
                     {
-                        logger.Debug($"Start compression. File: {vmBackupPath}");
+                        logger.Debug("Start compression. File: {0}", vmBackupPath);
 
                         if (options.ZipFormat)
                         {
@@ -346,7 +336,7 @@ namespace HyperVBackUp.Engine
 
                                 foreach (var file in files)
                                 {
-                                    logger.Debug($"Adding file: {file.Key}");
+                                    logger.Debug("Adding file: {0}", file.Key);
                                     zf.AddEntry(file.Key, file.Value);
                                 }
 
@@ -516,7 +506,8 @@ namespace HyperVBackUp.Engine
 
                 if (!isIgnorable)
                 {
-                    throw new Exception($"Entry \"{srcPath}\" not found in snapshot");
+                    throw new InvalidOperationException(
+                        string.Format("Entry \"{0}\" not found in snapshot", srcPath));
                 }
             }
         }
@@ -564,7 +555,8 @@ namespace HyperVBackUp.Engine
 
                 if (!isIgnorable)
                 {
-                    throw new Exception($"Entry \"{srcPath}\" not found in snapshot");
+                    throw new InvalidOperationException(
+                        string.Format("Entry \"{0}\" not found in snapshot", srcPath));
                 }
             }
         }
@@ -621,9 +613,9 @@ namespace HyperVBackUp.Engine
                     foreach (var mo in moc)
                         using (mo)
                         {
-                            if (vmExclude==null || !vmExclude.Contains((string) mo["ElementName"], StringComparer.Create(CultureInfo.InvariantCulture, true)))
+                            if (vmExclude == null || !vmExclude.Contains((string)mo["ElementName"], StringComparer.Create(CultureInfo.InvariantCulture, true)))
                             {
-                                d.Add((string) mo[vmIdField], (string) mo["ElementName"]);
+                                d.Add((string)mo[vmIdField], (string)mo["ElementName"]);
                             }
                         }
             }
