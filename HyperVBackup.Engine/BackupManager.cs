@@ -152,6 +152,25 @@ namespace HyperVBackUp.Engine
             }
         }
 
+        private static bool PathContainsFolderSegment(string fullPath, string folderName)
+        {
+            if (string.IsNullOrEmpty(fullPath)) return false;
+
+            // Normalize separators to backslash for consistent matching
+            var p = fullPath.Replace('/', '\\');
+
+            // Match as a real folder segment, not a substring
+            var mid = "\\" + folderName + "\\";
+            if (p.IndexOf(mid, StringComparison.OrdinalIgnoreCase) >= 0) return true;
+
+            // Also catch when the path ends exactly at the folder, or with \*, etc.
+            if (p.EndsWith("\\" + folderName, StringComparison.OrdinalIgnoreCase)) return true;
+            if (p.EndsWith("\\" + folderName + "\\", StringComparison.OrdinalIgnoreCase)) return true;
+            if (p.EndsWith("\\" + folderName + "\\*", StringComparison.OrdinalIgnoreCase)) return true;
+
+            return false;
+        }
+
         private void RaiseEvent(EventAction action, IList<IVssWMComponent> components,
             IDictionary<string, string> volumeMap)
         {
@@ -232,18 +251,23 @@ namespace HyperVBackUp.Engine
                         var volumeName = volumeMap[volumePath];
 
 
-                        // Exclude snapshots
                         var fileName = Path.GetFileName(path.Substring(volumePath.Length)).ToUpperInvariant();
                         var include = !path.EndsWith("\\*");
 
+                        // Exclude the "Snapshots" folder and anything under it
+                        if (PathContainsFolderSegment(path, "Snapshots"))
+                        {
+                            include = false;
+                        }
+
                         if (include && options.VhdInclude != null && options.VhdInclude.Count > 0 && options.VhdInclude.Count(
-            x => string.CompareOrdinal(x.ToUpperInvariant(), fileName) == 0) == 0)
+                            x => string.CompareOrdinal(x.ToUpperInvariant(), fileName) == 0) == 0)
                         {
                             include = false;
                         }
 
                         if (include && options.VhdIgnore != null && options.VhdIgnore.Count > 0 && options.VhdIgnore.Count(
-                                    x => string.CompareOrdinal(x.ToUpperInvariant(), fileName) == 0) != 0)
+                            x => string.CompareOrdinal(x.ToUpperInvariant(), fileName) == 0) != 0)
                         {
                             include = false;
                         }
