@@ -63,10 +63,5 @@ The included nlog.config file writes the output to:
 * .Net Framework 4.8 (https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48)
 * Only 64 bit binaries are provided, if you need a 32 bit version you must download and compile the source code using Visual Studio 2026
 
-**Troubleshooting**
-
-* If you find the following error when you run the program: System.MissingMethodException: Method not found System.Array.Empty() you are probably running the Net Framework 4.5, you need to install version 4.6.1.
-
-* If you find the following error when you run the program: Could not load file or assembly AlphaVSS.60x64.dll you need to install the Microsoft Visual C++ 2017 Redistributable Package.
 
 
