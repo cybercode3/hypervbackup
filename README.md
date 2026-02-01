@@ -1,16 +1,14 @@
 # HyperVBackup
 
-HyperVBackup is, as you can guess, a utility that can perform backups of HyperV virtual machines. It uses Volume Shadow Services (VSS) so it can back up running virtual machines. 
+HyperVBackup is, as you can guess, a utility that can perform backups of Hyper-V virtual machines. It uses Volume Shadow Copy Service (VSS), so it can back up running virtual machines.
 
-It started as a fork of http://hypervbackup.codeplex.com, as it was evident that the original creators weren’t going to update it anymore. So we added some features that we and the community were needing.
+It started as a fork of http://hypervbackup.codeplex.com, as it was evident that the original creators were not going to update it anymore. So, we added some features that we and the community needed.
 
-Beware that this project is a heavily modified version of the original source code with a lot of features added (7zip format support, individual files filter, updated to .Net Framework 4.8, etc.). If you want a closer version to the original code visit http://hypervbackup.codeplex.com/discussions/567463. 
+Beware that this project is a heavily modified version of the original source code, with many features added (7zip format support, individual file filters, updated to .NET Framework 4.8, etc.). If you want a version closer to the original code, visit http://hypervbackup.codeplex.com/discussions/567463.
 
-Note: Version 4 includes a lot of breaking changes, if you are still using version 2 you can find the previous documentation 
-in the Wiki (https://github.com/ColiseoSoftware/hypervbackup/wiki)
+Note: Version 4 includes many breaking changes. If you are still using version 2, you can find the previous documentation in the Wiki (https://github.com/ColiseoSoftware/hypervbackup/wiki).
 
-
-You can see all options executing the program without arguments, currently those are:
+You can see all options by executing the program without arguments. Currently, those are:
 
 ```
 f, file              Text file containing a list of VMs to backup, one per line.
@@ -36,22 +34,22 @@ onfailure            Execute this program if backup fails. You must provide a fu
 mt                   (Default: off) Enable multi-threaded compression (only for 7zip format). In multicore processors use all the processing power available. The backups are faster at the cost of high processor usage.
 ```
 
-For example, if you want to backup the Mail Server virtual machine on \\\shared\backups folder you use:
+For example, if you want to back up the Mail Server virtual machine to the \\shared\backups folder, use:
 
-```HyperVBackup -l "Mail Server" -o "\\shared\backups" --compressionlevel 0```
+HyperVBackup -l "Mail Server" -o "\\shared\backups" --compressionlevel 0
 
-Note: short switchs use one dash (-) / long switches use two dashes (--). Not all options have a short switch available.
+Note: short switches use one dash (-), and long switches use two dashes (--). Not all options have a short switch available.
 
-HyperVBackup only works on HyperV Server and DOESN’T work on HyperV Client (Windows 10, 11). Client Windows doesn't include the necessary OS level support, so it's a Windows limitation and HyperVBackup cannot do anything about it.
+HyperVBackup only works on Hyper-V Server and does not work on Hyper-V Client (Windows 10, 11). Client versions of Windows do not include the necessary OS-level support, so this is a Windows limitation and HyperVBackup cannot do anything about it.
 
-By default the output is stored in 7zip format (you must provide the 7z.dll file corresponding to the version you want to use, included is version 25.01). 
-You can use the zip format for the output, in this case an internal compression engine is used. The backups take more time and the resulting files are slightly bigger if you use the zip format.
+By default, the output is stored in 7zip format (you must provide the 7z.dll file corresponding to the version you want to use; version 25.01 is included).
+You can use the zip format for the output. In this case, an internal compression engine is used. Backups take more time, and the resulting files are slightly larger when you use the zip format.
 
 Cluster Shared Volumes are supported.
 
 **How to configure logging:**
 
-The logging functions are based in NLog (http://nlog-project.org/), so you can configure the output using the nlog.config file. The official documentation (https://github.com/NLog/NLog/wiki/Configuration-file) shows you how to build one.
+The logging functions are based on NLog (http://nlog-project.org/), so you can configure the output using the nlog.config file. The official documentation (https://github.com/NLog/NLog/wiki/Configuration-file) shows you how to build one.
 
 The included nlog.config file writes the output to:
 * The console window
@@ -60,4 +58,4 @@ The included nlog.config file writes the output to:
 
 **Requirements**
 
-* .Net Framework 4.8 (https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48)
+* .NET Framework 4.8 (https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48)
