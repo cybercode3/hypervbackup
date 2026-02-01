@@ -61,7 +61,3 @@ The included nlog.config file writes the output to:
 **Requirements**
 
 * .Net Framework 4.8 (https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48)
-* Only 64 bit binaries are provided, if you need a 32 bit version you must download and compile the source code using Visual Studio 2026
-
-
-
