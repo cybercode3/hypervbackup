@@ -4,9 +4,9 @@ HyperVBackup is, as you can guess, a utility that can perform backups of HyperV 
 
 It started as a fork of http://hypervbackup.codeplex.com, as it was evident that the original creators weren’t going to update it anymore. So we added some features that we and the community were needing.
 
-Beware that this project is a heavily modified version of the original source code with a lot of features added (7zip format support, individual files filter, updated to .Net Framework 4.6.1, etc.). If you want a closer version to the original code visit http://hypervbackup.codeplex.com/discussions/567463. 
+Beware that this project is a heavily modified version of the original source code with a lot of features added (7zip format support, individual files filter, updated to .Net Framework 4.8, etc.). If you want a closer version to the original code visit http://hypervbackup.codeplex.com/discussions/567463. 
 
-Note: Version 3 includes a lot of breaking changes, if you are still using version 2 you can find the previous documentation 
+Note: Version 4 includes a lot of breaking changes, if you are still using version 2 you can find the previous documentation 
 in the Wiki (https://github.com/ColiseoSoftware/hypervbackup/wiki)
 
 
@@ -42,9 +42,9 @@ For example, if you want to backup the Mail Server virtual machine on \\\shared\
 
 Note: short switchs use one dash (-) / long switches use two dashes (--). Not all options have a short switch available.
 
-HyperVBackup only works on HyperV Server (Windows Server 2012, 2012 R2 and 2016 supported) and DOESN’T work on HyperV Client (Windows 8, 8.1 or 10). Client Windows doesn't include the necessary OS level support, so it's a Windows limitation and HyperVBackup cannot do anything about it.
+HyperVBackup only works on HyperV Server and DOESN’T work on HyperV Client (Windows 10, 11). Client Windows doesn't include the necessary OS level support, so it's a Windows limitation and HyperVBackup cannot do anything about it.
 
-By default the output is stored in 7zip format (you must provide the 7z.dll file corresponding to the version you want to use, included is version 16.04). 
+By default the output is stored in 7zip format (you must provide the 7z.dll file corresponding to the version you want to use, included is version 25.01). 
 You can use the zip format for the output, in this case an internal compression engine is used. The backups take more time and the resulting files are slightly bigger if you use the zip format.
 
 Cluster Shared Volumes are supported.
@@ -60,9 +60,8 @@ The included nlog.config file writes the output to:
 
 **Requirements**
 
-* .Net Framework 4.6.1 (https://www.microsoft.com/en-us/download/details.aspx?id=49981)
-* Visual C++ 2017 Redistributable (https://social.msdn.microsoft.com/Forums/en-US/e653a57a-bc32-4134-87bf-df33058f0531/download-microsoft-visual-c-2017-redistributable)
-* Only 64 bit binaries are provided, if you need a 32 bit version you must download and compile the source code using Visual Studio 2017
+* .Net Framework 4.8 (https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48)
+* Only 64 bit binaries are provided, if you need a 32 bit version you must download and compile the source code using Visual Studio 2026
 
 **Troubleshooting**
 
