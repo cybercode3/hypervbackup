@@ -236,19 +236,13 @@ namespace HyperVBackUp.Engine
                         var fileName = Path.GetFileName(path.Substring(volumePath.Length)).ToUpperInvariant();
                         var include = !path.EndsWith("\\*");
 
-                        var pathItems = path.Split(Path.DirectorySeparatorChar);
-                        if (pathItems.Length >= 2 && string.Equals(pathItems[pathItems.Length - 2], "snapshots", StringComparison.InvariantCultureIgnoreCase))
+                        if (include && options.VhdInclude != null && options.VhdInclude.Count > 0 && options.VhdInclude.Count(
+            x => string.CompareOrdinal(x.ToUpperInvariant(), fileName) == 0) == 0)
                         {
                             include = false;
                         }
 
-                        if (include && options.VhdInclude != null && options.VhdInclude.Count(
-                                    x => string.CompareOrdinal(x.ToUpperInvariant(), fileName) == 0) == 0)
-                        {
-                            include = false;
-                        }
-
-                        if (include && options.VhdIgnore != null && options.VhdIgnore.Count(
+                        if (include && options.VhdIgnore != null && options.VhdIgnore.Count > 0 && options.VhdIgnore.Count(
                                     x => string.CompareOrdinal(x.ToUpperInvariant(), fileName) == 0) != 0)
                         {
                             include = false;
