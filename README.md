@@ -2,9 +2,9 @@
 
 HyperVBackup is, as you can guess, a utility that can perform backups of Hyper-V virtual machines. It uses Volume Shadow Copy Service (VSS), so it can back up running virtual machines.
 
-It started as a fork of http://hypervbackup.codeplex.com, as it was evident that the original creators were not going to update it anymore. So, we added some features that we and the community needed.
+It started as a fork of ~~http://hypervbackup.codeplex.com~~ (no longer online), as it was evident that the original creators were not going to update it anymore. So, we added some features that we and the community needed.
 
-Beware that this project is a heavily modified version of the original source code, with many features added (7zip format support, individual file filters, updated to .NET Framework 4.8, etc.). If you want a version closer to the original code, visit http://hypervbackup.codeplex.com/discussions/567463.
+Beware that this project is a heavily modified version of the original source code, with many features added (7zip format support, individual file filters, updated to .NET Framework 4.8, etc.).
 
 Note: Version 4 includes many breaking changes. If you are still using version 2, you can find the previous documentation in the Wiki (https://github.com/ColiseoSoftware/hypervbackup/wiki).
 
