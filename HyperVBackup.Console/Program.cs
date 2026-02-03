@@ -104,7 +104,7 @@ namespace HyperVBackup.Console
                 var stopwatch = new Stopwatch();
                 stopwatch.Start();
 
-                System.Console.WriteLine("HyperVBackup 3");
+                System.Console.WriteLine("HyperVBackup 4");
                 System.Console.WriteLine("Copyright (C) 2012 Cloudbase Solutions SRL");
                 System.Console.WriteLine("Copyright (C) 2016/2017 Coliseo Software SRL");
                 System.Console.WriteLine("Copyright (C) 2026 cybercode3");
@@ -498,3 +498,4 @@ namespace HyperVBackup.Console
         }
     }
 }
+
